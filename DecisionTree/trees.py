@@ -1,4 +1,5 @@
 from math import log
+import pickle
 
 def calsShannonEnt(dataSet):  
 	numEntries=len(dataSet)
@@ -87,10 +88,22 @@ def classify(inputTree,featLabels,testVect):
 				classLabel=secondDict[key]
 	return classLabel
 
+def storeTree(inputTree,fileName):
+	fw=open(fileName,'wb')
+	pickle.dump(inputTree, fw)
+	fw.close()
+
+def grabTree(fileName):
+	fr=open(fileName,'rb')
+	return pickle.load(fr)
+
+
 if __name__=='__main__':	
 	dataSet,labels=createDataSet()
 	myTree=createTree(dataSet, labels)
 	print classify(myTree, labels, [1,1])
+	#storeTree(myTree, 'classifierStorage.txt')
+	print grabTree('classifierStorage.txt')
 
 
 
